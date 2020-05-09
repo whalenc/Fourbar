@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<robot name="fourbar">
+  <joint name="ground_joint1" type="revolute">
+    <parent link="ground_link"/>
+    <child link="left_link"/>
+    <origin rpy="1.57079 0      0" xyz="0   0.25 0.25"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.0" lower="-1e+16" upper="1e+16" velocity="0.0"/>
+  </joint>
+
+  <transmission name="tran1">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="ground_joint1">
+    <hardwareInterface>EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor1">
+    <hardwareInterface>EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+  <joint name="ground_joint2" type="revolute">
+    <parent link="left_link"/>
+    <child link="top_link"/>
+    <origin rpy="-1.57079  0       0" xyz="0   0  -0.5"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.0" lower="-1e+16" upper="1e+16" velocity="0.0"/>
+  </joint>
+  <joint name="top_joint1" type="revolute">
+    <parent link="top_link"/>
+    <child link="right_link"/>
+    <origin rpy="-1.57079  0       0" xyz="0   0  -0.5"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.0" lower="-1e+16" upper="1e+16" velocity="0.0"/>
+  </joint>
+  <link name="ground_link">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="1" ixy="1" ixz="1" iyy="1" iyz="1" izz="1"/>
+    </inertial>
+    <collision name="ground_link_collision">
+      <origin rpy="0 0 0" xyz="0   0.25 0"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="ground_link_visual">
+      <origin rpy="0 0 0" xyz="0   0.25 0"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_link">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <inertia ixx="1" ixy="1" ixz="1" iyy="1" iyz="1" izz="1"/>
+    </inertial>
+    <collision name="left_link_collision">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="left_link_visual">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="top_link">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <inertia ixx="1" ixy="1" ixz="1" iyy="1" iyz="1" izz="1"/>
+    </inertial>
+    <collision name="top_link_collision">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="top_link_visual">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_link">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <inertia ixx="1" ixy="1" ixz="1" iyy="1" iyz="1" izz="1"/>
+    </inertial>
+    <collision name="right_link_collision">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </collision>
+    <visual name="right_link_visual">
+      <origin rpy="0 0 0" xyz="0    0   -0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
