@@ -1,0 +1,45 @@
+<launch>
+
+  <!-- USE: roslaunch my_mira_description urdf_visualize.launch model:='$(find myrobot_package)/urdf/myrobot.urdf' -->
+  <arg name="model" default="$(find fourbar_description)/urdf/fourbar_sdf_copy.urdf"/>
+
+
+  <param name="robot_description" command="cat $(arg model)" />   
+  <param name="robot_description" textfile="$(find fourbar_description)/urdf/fourbar_sdf_copy.urdf"/>
+  <param name="robot_description_sdf" textfile="$(find fourbar_description)/urdf/fourbar_sdf_copy.sdf"/>
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/opendog/joint_states" />
+  </node>
+
+<!-- launch gazebo world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find fourbar_description)/launch/fourbar.world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+
+  <!-- Spawn a robot into Gazebo -->
+  <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find fourbar_description)/urdf/fourbar_sdf_copy.urdf -urdf -z 1 -model fourbar_full" /> -->
+<node
+ name="spawn_model"
+ pkg="gazebo_ros"
+ type="spawn_model"
+ args="-sdf -param robot_description_sdf -model urdf -x 0 -y 0.6 -z 0.3"
+ output="screen">
+</node>
+
+<rosparam file="$(find fourbar_description)/control/fourbar.yaml" command="load"/>
+
+<node name="controller_spawner" 
+    pkg="controller_manager" 
+    type="spawner" respawn="false" output="screen" ns ="/fourbar"
+    args="joint1_position_controller joint_state_controller">
+</node>
+<!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/opendog/joint_states" />
+</node> -->
+
+
+</launch>
